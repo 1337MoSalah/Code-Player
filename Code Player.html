@@ -1,0 +1,121 @@
+<html>
+
+    <head>
+        
+        <title>Code Player</title>
+ 
+        <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.12.1/jquery-ui.js"></script>
+        <link href="jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+        
+        <style type="text/css">
+            body{
+                padding: 0;
+                margin: 0;
+                font-family: monospace;
+            }
+            h2{
+                padding-left: 10px;
+            }
+            #header{
+                width: 100%;
+                height: 50px;
+                float: left;
+            background-color: brown;
+            }
+            button{
+                float:left;
+                font-size: 105%;
+                position : relative;
+                left:540px;
+                bottom: 40px;
+                border : groove 1px brown;
+                background-color: crimson;
+                border-radius: 4px;
+                
+            }
+            
+            #outputarea{
+                float: left;
+                border-right: 1px solid black;
+                border-bottom: 1px solid black;
+                height: 594px;
+
+            }
+            textarea{
+                resize: none;
+                float: left;
+                border-right: 1px solid black;
+                border-bottom: 1px solid black;
+                height: 595px;
+                width: 25%;
+                padding-top: 5px;
+            }
+            .mousehover{
+                background-color: orange;
+            }
+            .selected{
+                background-color: whitesmoke;
+            }
+            .hidden{
+                display:none;
+            }
+            #outputarea{
+                border:none;
+                width: 25%;
+                
+            }
+        </style>
+        
+    </head>
+
+    <body>    
+        <div id="header" >
+            <h2>Code Player</h2>
+            <button id="html">HTML</button>
+            <button id="css">CSS</button>
+            <button id="js">JavaScript</button>
+            <button id="output">Output</button>
+        </div>
+        
+            <textarea id="htmlarea" class="area"><p id="welcome">Hello!!</p></textarea>
+            <textarea id="cssarea" class="area">#welcome{color:red;}</textarea>
+            <textarea id="jsarea" class="area">document.getElementById("welcome").innerHTML += " Created By Mohamed Salah ^^";</textarea>
+            <iframe id="outputarea" class="area">OUTPUT</iframe>
+        
+        
+        <script type="text/javascript"> 
+            
+            function run(){
+            $("iframe").contents().find("html").html("<html><head><style type='text/css'>" + $("#cssarea").val() + "</style></head><body>" +$("#htmlarea").val()+"</body></html>");
+              document.getElementById("outputarea").contentWindow.eval($("#jsarea").val());
+
+
+            };
+            
+            $("button").hover(function(){
+                $(this).addClass("mousehover");
+                     },function(){
+                $(this).removeClass("mousehover");
+
+            });
+           
+            $("button").click(function(){
+                $(this).toggleClass("selected");
+                $("#"+$(this).attr("id")+"area").toggleClass("hidden");
+                var active = 4 - $(".selected").length;
+                $(".area").width(($(window).width())/active-5);
+                
+            });
+            
+            run();
+
+            $("textarea").on('change keyup paste',function(){
+            run();
+            });
+        
+        </script>
+        
+    </body>
+
+</html>
